@@ -1,0 +1,1579 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:vcs="URN:CISCO:SPVTG:VCS:BO:REST:0001" targetNamespace="URN:CISCO:SPVTG:VCS:BO:REST:0001" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:simpleType name="soundTypeType">
+		<xs:annotation>
+			<xs:documentation>Types of sound formats</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="vcs:string255Type">
+			<xs:enumeration value="urn:nnds:mercury:metadata:soundType/Monaural"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:soundType/SimpleStereo"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:soundType/DigitalSurround"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:soundType/Dolby51"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:soundType/MovieTheatre"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:soundType/DolbyDigital"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:soundType/DolbyProLogic"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="cgmsType">
+		<xs:annotation>
+			<xs:documentation>Enumerated string type with the following values
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="vcs:string255Type">
+			<xs:enumeration value="urn:nnds:mercury:metadata:cgmsType/Copyfree"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:cgmsType/NoMoreCopies"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:cgmsType/CopyOnce"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:cgmsType/CopyNever"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="entryActionType">
+		<xs:annotation>
+			<xs:documentation> Type for the action attribute of instructions
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PUT"/>
+			<xs:enumeration value="POST"/>
+			<xs:enumeration value="DELETE"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="basicDateTimeType">
+		<xs:annotation>
+			<xs:documentation> Date and Time Type (YYYY-MM-DDThh:mm:ssZ)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:dateTime">
+			<xs:pattern value="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="basicTimeType">
+		<xs:annotation>
+			<xs:documentation> Date and Time Type (YYYY-MM-DDThh:mm:ssZ)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:time">
+			<xs:pattern value="\d{2}:\d{2}:\d{2}Z"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="basicDurationType">
+		<xs:annotation>
+			<xs:documentation> Duration Type (HH:mm:ss[:FF])</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{2}:\d{2}:\d{2}(:\d{2})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="keyType">
+		<xs:annotation>
+			<xs:documentation> Key Type (0..20 chars)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="key40Type">
+		<xs:annotation>
+			<xs:documentation> Key Type (0..40 chars)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+			<xs:maxLength value="40"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="key100Type">
+		<xs:annotation>
+			<xs:documentation> Key Type (0..100 chars)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="key255Type">
+		<xs:annotation>
+			<xs:documentation> Key Type (0..255 chars)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="uriType">
+		<xs:annotation>
+			<xs:documentation> URI type restricted to 255 ASCII characters from
+				the unreserves URI set (ASCII codepoints 0x21, 0x24-0x3B, 0x3D,
+				0x40-0x5A, 0x5F, 0x61-0x7A, 0x7E)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="flagType">
+		<xs:annotation>
+			<xs:documentation> Boolean type</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean"/>
+	</xs:simpleType>
+	<xs:simpleType name="string100Type">
+		<xs:annotation>
+			<xs:documentation>String Type (0..100 chars)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string10Type">
+		<xs:annotation>
+			<xs:documentation>String Type (0..10 chars)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string16Type">
+		<xs:annotation>
+			<xs:documentation>String Type (0..16 chars)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="16"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string200Type">
+		<xs:annotation>
+			<xs:documentation>String Type (0..200 chars)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="200"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string255Type">
+		<xs:annotation>
+			<xs:documentation>String Type (0..200 chars)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="200"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string20Type">
+		<xs:annotation>
+			<xs:documentation>String Type (0..20 chars)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string250Type">
+		<xs:annotation>
+			<xs:documentation>String Type (0..250 chars)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="250"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string30Type">
+		<xs:annotation>
+			<xs:documentation>String Type (0..30 chars)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="30"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string40Type">
+		<xs:annotation>
+			<xs:documentation>String Type (0..40 chars)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="40"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string50Type">
+		<xs:annotation>
+			<xs:documentation>String Type (0..50 chars)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string60Type">
+		<xs:annotation>
+			<xs:documentation>String Type (0..60 chars)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="60"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string80Type">
+		<xs:annotation>
+			<xs:documentation>String Type (0..80 chars)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="80"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string750Type">
+		<xs:annotation>
+			<xs:documentation>String Type (0..750 chars)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="750"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string1000Type">
+		<xs:annotation>
+			<xs:documentation>String Type (0..1000 chars)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="1000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string1333Type">
+		<xs:annotation>
+			<xs:documentation>String Type (0..1333 chars)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="1333"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string4000Type">
+		<xs:annotation>
+			<xs:documentation>String Type (0..4000 chars)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="4000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="unsigned4Type">
+		<xs:annotation>
+			<xs:documentation>4-bit Unsigned Integer (0..15)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:maxInclusive value="15"/>
+			<xs:minInclusive value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="unsigned32Type">
+		<xs:annotation>
+			<xs:documentation>32-bit Unsigned Integer (0..4294967295)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:maxInclusive value="4294967295"/>
+			<xs:minInclusive value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="integerSignedType">
+		<xs:annotation>
+			<xs:documentation>32-bit signed Integer (0..2147483647)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:maxInclusive value="2147483647"/>
+			<xs:minInclusive value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="unsigned15Type">
+		<xs:annotation>
+			<xs:documentation>15-bit Unsigned Integer (0..32767)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:maxInclusive value="32767"/>
+			<xs:minInclusive value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="unsigned16Type">
+		<xs:annotation>
+			<xs:documentation>16-bit Unsigned Integer (0..65535)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:maxInclusive value="65535"/>
+			<xs:minInclusive value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="unsigned8Type">
+		<xs:annotation>
+			<xs:documentation>8-bit Unsigned Integer (0..255)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:maxInclusive value="255"/>
+			<xs:minInclusive value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="number1Type">
+		<xs:annotation>
+			<xs:documentation> Number (1) Type (0..9)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="number2Type">
+		<xs:annotation>
+			<xs:documentation> Number (2) Type (0..99)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="99"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="number3Type">
+		<xs:annotation>
+			<xs:documentation> Number (3) Type (0..999)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="number4Type">
+		<xs:annotation>
+			<xs:documentation> Number (4) Type (0..9999)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="9999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="number5Type">
+		<xs:annotation>
+			<xs:documentation> Number (5) Type (0..99999)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="99999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="number6Type">
+		<xs:annotation>
+			<xs:documentation> Number (6) Type (0..999999)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="999999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="number12Type">
+		<xs:annotation>
+			<xs:documentation> Number (12) Type (0..999999999999)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="999999999999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="longNumberType">
+		<xs:annotation>
+			<xs:documentation> Long (19) Type (0..9223372036854775807)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:long"/>
+	</xs:simpleType>
+	<xs:simpleType name="cdata">
+		<xs:annotation>
+			<xs:documentation>String Type (0..512 chars)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+			<xs:maxLength value="512"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="cdataUnlimited">
+		<xs:annotation>
+			<xs:documentation>String Type</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="categoryTypeType">
+		<xs:annotation>
+			<xs:documentation> Type for the categoryType attribute
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="vcs:number2Type">
+			<xs:enumeration value="0"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="4"/>
+			<xs:enumeration value="6"/>
+			<xs:enumeration value="7"/>
+			<xs:enumeration value="9"/>
+			<xs:enumeration value="10"/>
+			<xs:enumeration value="11"/>
+			<xs:enumeration value="12"/>
+			<xs:enumeration value="13"/>
+			<xs:enumeration value="14"/>
+			<xs:enumeration value="15"/>
+			<xs:enumeration value="16"/>
+			<xs:enumeration value="17"/>
+			<xs:enumeration value="50"/>
+			<xs:enumeration value="51"/>
+			<xs:enumeration value="52"/>
+			<xs:enumeration value="53"/>
+			<xs:enumeration value="54"/>
+			<xs:enumeration value="55"/>
+			<xs:enumeration value="56"/>
+			<xs:enumeration value="57"/>
+			<xs:enumeration value="58"/>
+			<xs:enumeration value="59"/>
+			<xs:enumeration value="60"/>
+			<xs:enumeration value="61"/>
+			<xs:enumeration value="62"/>
+			<xs:enumeration value="63"/>
+			<xs:enumeration value="64"/>
+			<xs:enumeration value="65"/>
+			<xs:enumeration value="66"/>
+			<xs:enumeration value="67"/>
+			<xs:enumeration value="68"/>
+			<xs:enumeration value="69"/>
+			<xs:enumeration value="70"/>
+			<xs:enumeration value="71"/>
+			<xs:enumeration value="72"/>
+			<xs:enumeration value="73"/>
+			<xs:enumeration value="74"/>
+			<xs:enumeration value="75"/>
+			<xs:enumeration value="76"/>
+			<xs:enumeration value="77"/>
+			<xs:enumeration value="78"/>
+			<xs:enumeration value="79"/>
+			<xs:enumeration value="80"/>
+			<xs:enumeration value="81"/>
+			<xs:enumeration value="82"/>
+			<xs:enumeration value="83"/>
+			<xs:enumeration value="84"/>
+			<xs:enumeration value="85"/>
+			<xs:enumeration value="86"/>
+			<xs:enumeration value="87"/>
+			<xs:enumeration value="88"/>
+			<xs:enumeration value="89"/>
+			<xs:enumeration value="90"/>
+			<xs:enumeration value="91"/>
+			<xs:enumeration value="92"/>
+			<xs:enumeration value="93"/>
+			<xs:enumeration value="94"/>
+			<xs:enumeration value="95"/>
+			<xs:enumeration value="96"/>
+			<xs:enumeration value="97"/>
+			<xs:enumeration value="98"/>
+			<xs:enumeration value="99"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LanguageStringType">
+		<xs:annotation>
+			<xs:documentation>This resource contains a string with its language.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="vcs:string4000Type">
+				<xs:attribute name="lang" type="vcs:string255Type" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="DescriptionStringType">
+		<xs:annotation>
+			<xs:documentation>This resource contains a string with its language
+				and length.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="vcs:string4000Type">
+				<xs:attribute name="lang" type="vcs:string255Type" use="required"/>
+				<xs:attribute name="length" type="vcs:StringLengthType"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="StringLengthType">
+		<xs:annotation>
+			<xs:documentation>Enumerated string type with the following values
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="vcs:string255Type">
+			<xs:enumeration value="STRING_LENGTH_TYPE_SHORT"/>
+			<xs:enumeration value="STRING_LENGTH_TYPE_MEDIUM"/>
+			<xs:enumeration value="STRING_LENGTH_TYPE_LONG"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="StringListType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a list of string.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="value" type="vcs:string255Type" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ParentalGuidancesType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a list of
+				ParentalGuidance data.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ParentalGuidance" type="vcs:ParentalGuidanceType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ParentalGuidanceType">
+		<xs:annotation>
+			<xs:documentation>This resource contains the Parental Guidance detail
+				of a content.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="regions" type="vcs:URIListType" minOccurs="0"/>
+			<xs:element name="parentalRating" type="vcs:uriType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="URIListType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a list of URI.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="value" type="vcs:uriType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PresentationMediasType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a list of
+				PresentationMedia data.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PresentationMedia" type="vcs:PresentationMediaType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PresentationMediaType">
+		<xs:annotation>
+			<xs:documentation>This resource contains the PresentationMedia
+				details.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="contentInstanceRef" type="vcs:URIListType" minOccurs="0"/>
+			<xs:element name="contentReference" type="vcs:uriType" minOccurs="0"/>
+			<xs:element name="mediaType" type="vcs:uriType"/>
+			<xs:element name="parentalGuidance" type="vcs:ParentalGuidancesType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RelatedMaterialsType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a list of
+				RelatedMaterial data.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RelatedMaterial" type="vcs:RelatedMaterialType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RelatedMaterialType">
+		<xs:annotation>
+			<xs:documentation>This resource contains the RelatedMaterial details.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="contentInstanceRef" type="vcs:URIListType" minOccurs="0"/>
+			<xs:element name="howRelated" type="vcs:uriType"/>
+			<xs:element name="presentationMedia" type="vcs:PresentationMediasType" minOccurs="0"/>
+			<xs:element name="promotionalText" type="vcs:LanguageStringType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PricesType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a list of Price data.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Price" type="vcs:PriceType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PriceType">
+		<xs:annotation>
+			<xs:documentation>This resource contains the Price details.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="isDefault" type="vcs:flagType" minOccurs="0"/>
+			<xs:element name="target" type="vcs:StringListType" minOccurs="0"/>
+			<xs:element name="currencyId" type="vcs:key255Type"/>
+			<xs:element name="value" type="vcs:unsigned32Type"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TermReferenceType">
+		<xs:annotation>
+			<xs:documentation>This resource is used to refer a term from another
+				resource with order details.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="startDateTime" type="vcs:basicDateTimeType" minOccurs="0"/>
+			<xs:element name="endDateTime" type="vcs:basicDateTimeType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="order" type="vcs:unsigned32Type"/>
+		<xs:attribute name="termRef" type="vcs:uriType" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="ItemType">
+		<xs:annotation>
+			<xs:documentation>This element describes a resource with its
+				attributes.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="action" type="vcs:entryActionType" use="required"/>
+		<xs:attribute name="resourceId" type="vcs:uriType" use="required"/>
+		<xs:attribute name="url" type="vcs:uriType" use="optional"/>
+	</xs:complexType>
+	<xs:simpleType name="resourceTypeType">
+		<xs:annotation>
+			<xs:documentation>Types for resources supported in the transaction
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ContentMetadata"/>
+			<xs:enumeration value="ContentInstanceMetadata"/>
+			<xs:enumeration value="ContentGroupMetadata"/>
+			<xs:enumeration value="PurchasableTitle"/>
+			<xs:enumeration value="PurchasableBoxset"/>
+			<xs:enumeration value="PurchasableShow"/>
+			<xs:enumeration value="PurchasableOffer"/>
+			<xs:enumeration value="PurchasableGroup"/>
+			<xs:enumeration value="PurchasableSeason"/>
+			<xs:enumeration value="ClassificationTree"/>
+			<xs:enumeration value="PurchaseOffering"/>
+			<xs:enumeration value="Service"/>
+			<xs:enumeration value="ServiceInstance"/>
+			<xs:enumeration value="ServiceLineup"/>
+			<xs:enumeration value="DeliveryInfo"/>
+			<xs:enumeration value="Provider"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ResponseResourceType">
+		<xs:annotation>
+			<xs:documentation>This resource is the subtype of Item used for
+				representing the changed resources in the response.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="vcs:ItemType">
+				<xs:attribute name="resourceType" type="vcs:resourceTypeType" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AffectedResourcesType">
+		<xs:annotation>
+			<xs:documentation>This contains the details(importantly URL) of the
+				updated resources
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Resource" type="vcs:ResponseResourceType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErrorResponseType">
+		<xs:annotation>
+			<xs:documentation>This element contains the details of any error
+				occured as
+				result of a request
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="code" type="vcs:string10Type" minOccurs="0"/>
+			<xs:element name="source" type="vcs:string100Type" minOccurs="0"/>
+			<xs:element name="message" type="vcs:string4000Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResponseType">
+		<xs:annotation>
+			<xs:documentation>This resource contains CAParameter detail in key
+				value pair.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="UpdatedResources" type="vcs:AffectedResourcesType" minOccurs="0"/>
+			<xs:element name="ErrorResponse" type="vcs:ErrorResponseType" minOccurs="0"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="MemberOfContentGroupType">
+		<xs:annotation>
+			<xs:documentation>This resource contains relation to a ContentGroup
+				from a content.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="order" type="vcs:unsigned32Type" minOccurs="0"/>
+			<xs:element name="contentGroupRef" type="vcs:uriType"/>
+			<xs:element name="startDateTime" type="vcs:basicDateTimeType" minOccurs="0"/>
+			<xs:element name="endDateTime" type="vcs:basicDateTimeType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CAParametersType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates the list of CAParameter
+				resources.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CAParameter" type="vcs:CAParameterType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CAParameterType">
+		<xs:annotation>
+			<xs:documentation>This resource contains CAParameter detail in key
+				value pair.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="parameterName" type="vcs:string255Type"/>
+			<xs:element name="parameterValue" type="vcs:string255Type"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OperatorSpecificDatasType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates list of OpsecData
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OperatorSpecificData" type="vcs:OperatorSpecificDataType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OperatorSpecificDataType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a OpsecData data.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="namespace" type="vcs:string4000Type"/>
+			<xs:element name="data" type="vcs:string4000Type" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OtherIdentifiersType">
+		<xs:annotation>
+			<xs:documentation>This resource contains other identifier
+				for the content.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OtherIdentifier" type="vcs:OtherIdentifierType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OtherIdentifierType">
+		<xs:annotation>
+			<xs:documentation>This resource contains other identifier
+				for the content.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="identifier" type="vcs:string255Type" />
+			<xs:element name="namespace" type="vcs:uriType" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContentInstanceMetadataType">
+		<xs:annotation>
+			<xs:documentation>This resource represents instance specific metadata
+				including descriptive metadata, essence metadata, encoded file
+				detail, encrypted file detail and content availability information.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="vcs:uriType"/>
+			<xs:element name="key" type="vcs:string255Type" minOccurs="0"/>
+			<xs:element name="contentRef" type="vcs:uriType" minOccurs="0"/>
+			<xs:element name="instanceType" type="vcs:contentInstanceTypeType"/>
+			<xs:element name="relatedMaterialContentId" type="vcs:string255Type" minOccurs="0" />
+			<xs:element name="instanceId" type="vcs:string255Type" minOccurs="0"/>
+			<xs:element name="startDateTime" type="vcs:basicDateTimeType" minOccurs="0"/>
+			<xs:element name="endDateTime" type="vcs:basicDateTimeType" minOccurs="0"/>
+			<xs:element name="imageMimeType" type="vcs:string255Type" minOccurs="0"/>
+			<xs:element name="imageTextLang" type="vcs:string255Type" minOccurs="0"/>
+			<xs:element name="imageWidth" type="vcs:unsigned16Type" minOccurs="0"/>
+			<xs:element name="imageHeight" type="vcs:unsigned16Type" minOccurs="0"/>
+			<xs:element name="encodedFile" type="vcs:FileDetailType" minOccurs="0"/>
+			<xs:element name="essenceMetadata" type="vcs:EssenceMetadataType" minOccurs="0"/>
+			<xs:element name="availability" type="vcs:InstanceAvailabilitiesType" minOccurs="0"/>
+			<xs:element name="catchupAvailability" type="vcs:CatchupAvailabilitiesType" minOccurs="0"/>
+			<xs:element name="imageFile" type="vcs:FileDetailType" minOccurs="0"/>
+			<xs:element name="encryptedFile" type="vcs:EncryptedFileDetailsType" minOccurs="0"/>
+			<xs:element name="descriptiveMetadata" type="vcs:ContentDescriptiveMetadataType"/>
+			<xs:element name="restartAvailability" type="vcs:RestartAvailabilitiesType" minOccurs="0"/>
+			<xs:element name="otherIdentifiers" type="vcs:OtherIdentifiersType" minOccurs="0" />
+			<xs:element name="filter" type="vcs:string255Type" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="contentInstanceTypeType">
+		<xs:annotation>
+			<xs:documentation>Types of content instance metadata
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="vcs:string255Type">
+			<xs:enumeration value="Linear"/>
+			<xs:enumeration value="Image"/>
+			<xs:enumeration value="PreEncoded"/>
+			<xs:enumeration value="Application"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="FileDetailType">
+		<xs:annotation>
+			<xs:documentation>This resource contains the details of a content
+				file.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="sourceUri" type="vcs:uriType" minOccurs="0"/>
+			<xs:element name="fileSize" type="vcs:longNumberType" minOccurs="0"/>
+			<xs:element name="checkSum" type="vcs:integerSignedType" minOccurs="0"/>
+			<xs:element name="fileFormat" type="vcs:FileFormatType" minOccurs="0"/>
+			<xs:element name="fileAccess" type="vcs:FileAccessListType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FileAccessListType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates the list of FileAccess
+				resources
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FileAccess" type="vcs:FileAccessType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FileAccessType">
+		<xs:annotation>
+			<xs:documentation>This resource contains file access details.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="accessUrl" type="vcs:uriType"/>
+			<xs:element name="deliveryType" type="vcs:deliveryTypeType"/>
+			<xs:element name="contentDeliveryInfo" type="vcs:contentDeliveryInfoType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="contentDeliveryInfoType">
+		<xs:annotation>
+			<xs:documentation>This resource contains delivery details.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="bandwidth" type="vcs:integerSignedType" minOccurs="0"/>
+			<xs:element name="externalServiceId" type="vcs:string255Type" minOccurs="0"/>
+			<xs:element name="cableSessionSetUpURI" type="vcs:uriType" minOccurs="0"/>
+			<xs:element name="cableFrequency" type="vcs:longNumberType" minOccurs="0"/>
+			<xs:element name="cableModulation" type="vcs:modulationTypeType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="modulationTypeType">
+		<xs:annotation>
+			<xs:documentation>Supported modulation schemes</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="vcs:string255Type">
+			<xs:enumeration value="urn:nnds:mercury:metadata:modulationType/16-QAM"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:modulationType/32-QAM"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:modulationType/64-QAM"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:modulationType/128-QAM"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:modulationType/256-QAM"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:modulationType/8PSK"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="deliveryTypeType">
+		<xs:annotation>
+			<xs:documentation>Supported delivery types</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="vcs:string255Type">
+			<xs:enumeration value="urn:nnds:mercury:metadata:deliveryType/VideoStreaming"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:deliveryType/PDLDelivery"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:deliveryType/BDLDelivery"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:deliveryType/OECMDelivery"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:deliveryType/File"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:deliveryType/abr/hls"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:deliveryType/abr/nds"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:deliveryType/abr/smooth"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:deliveryType/abr/mpegdash"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:deliveryType/CDNDelivery"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:deliveryType/cableDelivery"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FileFormatType">
+		<xs:annotation>
+			<xs:documentation>Types of files supported</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="vcs:string255Type">
+			<xs:enumeration value="urn:nnds:mercury:metadata:fileFormat/NFF"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:fileFormat/JPEG"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:fileFormat/GIF"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:fileFormat/MPEG4"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:fileFormat/PNG"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:fileFormat/TXT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="EssenceMetadataType">
+		<xs:annotation>
+			<xs:documentation>This resource represents essence of the content
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="soundType" type="vcs:soundTypeType" minOccurs="0"/>
+			<xs:element name="cgms" type="vcs:cgmsType" minOccurs="0"/>
+			<xs:element name="isEncrypted" type="vcs:flagType" minOccurs="0"/>
+			<xs:element name="isWideScreen" type="vcs:flagType" minOccurs="0"/>
+			<xs:element name="isHighDefinition" type="vcs:flagType" minOccurs="0"/>
+			<xs:element name="isThreeDimensional" type="vcs:flagType" minOccurs="0"/>
+			<xs:element name="hardOfHearingAvailable" type="vcs:flagType" minOccurs="0"/>
+			<xs:element name="audioDescriptionAvailable" type="vcs:flagType" minOccurs="0"/>
+			<xs:element name="subtitleLanguages" type="vcs:StringListType" minOccurs="0"/>
+			<xs:element name="contentControlParams" type="vcs:CAParametersType" minOccurs="0"/>
+			<xs:element name="videoComponents" type="vcs:VideoComponentsType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VideoComponentsType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates the list of video component
+				resources.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="VideoComponent" type="vcs:VideoComponentType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VideoComponentType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a video component
+				resource.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="resolution" type="vcs:ResolutionType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResolutionType">
+		<xs:annotation>
+			<xs:documentation>This resource contains Resolution parameter for the content instance.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ratio" type="vcs:string255Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CatchupAvailabilitiesType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates list of Catchup Availability
+				resources
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CatchupAvailability" type="vcs:CatchupAvailabilityType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RestartAvailabilitiesType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates list of Restart Availability
+				resources
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RestartAvailability" type="vcs:RestartAvailabilityType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InstanceAvailabilitiesType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates list of Availability
+				resources
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="InstanceAvailability" type="vcs:InstanceAvailabilityType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EncryptedFileAvailabilitiesType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates list of Encrypted File Availability
+				resources
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="EncryptedFileAvailability" type="vcs:EncryptedFileAvailabilityType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CatchupAvailabilityType">
+		<xs:annotation>
+			<xs:documentation>This resource contains the scheduling details of a
+				catchup content.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="serviceRef" type="vcs:uriType"/>
+			<xs:element name="nominalEventDateTime" type="vcs:basicDateTimeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RestartAvailabilityType">
+		<xs:annotation>
+			<xs:documentation>This resource contains the scheduling details of a
+				restart content.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="serviceRef" type="vcs:uriType"/>
+			<xs:element name="nominalEventDateTime" type="vcs:basicDateTimeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InstanceAvailabilityType">
+		<xs:annotation>
+			<xs:documentation>This resource contains the scheduling details of a
+				content.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="localeId" type="vcs:string255Type" minOccurs="0"/>
+			<xs:element name="serviceInstanceId" type="vcs:string255Type" minOccurs="0"/>
+			<xs:element name="startDateTime" type="vcs:basicDateTimeType"/>
+			<xs:element name="endDateTime" type="vcs:basicDateTimeType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EncryptedFileAvailabilityType">
+		<xs:annotation>
+			<xs:documentation>This resource contains the scheduling details of a
+				encrypted file.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="localeId" type="vcs:string255Type" minOccurs="0"/>
+			<xs:element name="startDateTime" type="vcs:basicDateTimeType"/>
+			<xs:element name="endDateTime" type="vcs:basicDateTimeType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OECMFilesType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates list of OECM resources
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OECMFile" type="vcs:OECMFileType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OECMFileType">
+		<xs:annotation>
+			<xs:documentation>This resource contains the details of the file that
+				holds offer related details of a content.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="offerRef" type="vcs:uriType"/>
+			<xs:element name="caSystemId" type="vcs:unsigned16Type"/>
+			<xs:element name="caSubSystemId" type="vcs:unsigned16Type"/>
+			<xs:element name="activeDateTime" type="vcs:basicDateTimeType" minOccurs="0"/>
+			<xs:element name="fileDetail" type="vcs:FileDetailType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EncryptedFileDetailsType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates list of Encrypted File Detail
+				resources
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="EncryptedFile" type="vcs:EncryptedFileDetailType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EncryptedFileDetailType">
+		<xs:annotation>
+			<xs:documentation>This resource contains the details of the file that
+				holds encrypted file related details of a content.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="versionId" type="vcs:string255Type" minOccurs="1"/>
+			<xs:element name="physicalInstanceId" type="vcs:string255Type" minOccurs="1"/>
+			<xs:element name="fileAccess" type="vcs:FileDetailType" minOccurs="1"/>
+			<xs:element name="encryptedFileAvailability" type="vcs:EncryptedFileAvailabilitiesType" minOccurs="0"/>
+			<xs:element name="oecmFiles" type="vcs:OECMFilesType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ContentInstanceMetadataResponse" type="vcs:ContentInstanceMetadataResponseType"/>
+	<xs:complexType name="ContentInstanceMetadataResponseType">
+		<xs:annotation>
+			<xs:documentation>Root element of the response body
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="vcs:ResponseType">
+				<xs:choice>
+					<xs:element name="ContentInstanceMetadata" type="vcs:ContentInstanceMetadataType" minOccurs="0"/>
+				</xs:choice>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ContentMetadataType">
+		<xs:annotation>
+			<xs:documentation>This resource represents content definition,
+				descriptive metadata, presentation metadata and related materials.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="vcs:uriType" />
+			<xs:element name="type" type="vcs:contentTypeType" />
+			<xs:element name="key" type="vcs:string255Type" minOccurs="0" />
+			<xs:element name="contentId" type="vcs:string255Type" minOccurs="0" />
+			<xs:element name="startDateTime" type="vcs:basicDateTimeType"
+				minOccurs="0" />
+			<xs:element name="endDateTime" type="vcs:basicDateTimeType"
+				minOccurs="0" />
+			<xs:element name="sourceUri" type="vcs:uriType" minOccurs="0" />
+			<xs:element name="providerRef" type="vcs:uriType"
+				minOccurs="0" />
+			<xs:element name="soundType" type="vcs:soundTypeType"
+				minOccurs="0" />
+			<xs:element name="cgms" type="vcs:cgmsType" minOccurs="0" />
+			<xs:element name="descriptiveMetadata" type="vcs:ContentDescriptiveMetadataType" />
+			<xs:element name="memberOf" type="vcs:MemberOfContentGroupType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="otherIdentifiers" type="vcs:OtherIdentifiersType" minOccurs="0" />
+			<xs:element name="filter" type="vcs:string255Type" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="contentTypeType">
+		<xs:annotation>
+			<xs:documentation>Types of content metadata</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="vcs:string255Type">
+			<xs:enumeration value="Selectable" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="ContentMetadataResponse" type="vcs:ContentMetadataResponseType" />
+	<xs:complexType name="ContentMetadataResponseType">
+		<xs:annotation>
+			<xs:documentation>Root element of the response body
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+		<xs:extension base="vcs:ResponseType">
+				<xs:choice>
+					<xs:element name="ContentMetadata" type="vcs:ContentMetadataType"
+						minOccurs="0" />
+				</xs:choice>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ContentDescriptiveMetadataType">
+		<xs:annotation>
+			<xs:documentation>This resource contains descriptive meta data of a
+				content.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="title" type="vcs:DescriptionStringType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="synopsis" type="vcs:DescriptionStringType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="episodeTitle" type="vcs:DescriptionStringType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="episodeDisplay" type="vcs:DescriptionStringType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="episodeDisplayEx" type="vcs:LanguageStringType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="seriesDisplay" type="vcs:DescriptionStringType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="seriesDisplayEx" type="vcs:LanguageStringType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="marketingMessage" type="vcs:LanguageStringType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="branding" type="vcs:LanguageStringType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="sortString" type="vcs:ContentSortStringType"
+				minOccurs="0" />
+			<xs:element name="weighedKeyword" type="vcs:ContentKeywordType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="SellPrice" type="vcs:PricesType"
+				minOccurs="0" />
+			<xs:element name="classificationRef" type="vcs:TermReferenceType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="genre" type="vcs:uriType" minOccurs="0"
+				maxOccurs="unbounded" />
+			<xs:element name="relatedMaterial" type="vcs:RelatedMaterialsType"
+				minOccurs="0" />
+			<xs:element name="presentationMedia" type="vcs:PresentationMediasType"
+				minOccurs="0" />
+			<xs:element name="epgInfoBits" type="vcs:unsigned32Type"
+				minOccurs="0" />
+			<xs:element name="userNibbles" type="vcs:unsigned8Type"
+				minOccurs="0" />
+			<xs:element name="exhibitionDateTime" type="vcs:basicDateTimeType"
+				minOccurs="0" />
+			<xs:element name="materialId" type="vcs:key255Type"
+				minOccurs="0" />
+			<xs:element name="duration" type="vcs:longNumberType"
+				minOccurs="0" />
+			<xs:element name="parentalGuidance" type="vcs:ParentalGuidancesType"
+				minOccurs="0" />
+			<xs:element name="credits" type="vcs:ContentCreditsType"
+				minOccurs="0" />
+			<xs:element name="awards" type="vcs:ContentAwardsType"
+				minOccurs="0" />
+			<xs:element name="contentProviderRef" type="vcs:key255Type"
+				minOccurs="0" />
+			<xs:element name="yearOfRelease" type="vcs:basicDateTimeType"
+				minOccurs="0" />
+			<xs:element name="countryOfOrigin" type="vcs:StringListType"
+				minOccurs="0" />
+			<xs:element name="criticsChoice" type="vcs:flagType"
+				minOccurs="0" />
+			<xs:element name="isNewShow" type="vcs:flagType"
+				minOccurs="0" />
+			<xs:element name="isPremiere" type="vcs:flagType"
+				minOccurs="0" />
+			<xs:element name="isFinale" type="vcs:flagType" minOccurs="0" />
+			<xs:element name="advisories" type="vcs:AdvisoriesListType"
+				minOccurs="0" />
+			<xs:element name="extendedDescriptions" type="vcs:ExtendedDescriptionsListType"
+				minOccurs="0" />
+
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ContentKeywordType">
+		<xs:annotation>
+			<xs:documentation>This resource contains the keyword for searching a
+				content with weight.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="vcs:string4000Type">
+				<xs:attribute name="lang" type="vcs:string255Type" use="required" />
+				<xs:attribute name="weight" type="vcs:unsigned16Type" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ContentCreditsType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a list of ContentCredit
+				data.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ContentCredit" type="vcs:ContentCreditType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContentCreditType">
+		<xs:annotation>
+			<xs:documentation>This resource contains the Credit detail of a
+				content.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="orderNum" type="vcs:unsigned32Type"
+				minOccurs="0" />
+			<xs:element name="role" type="vcs:uriType" minOccurs="0" />
+			<xs:element name="personName" type="vcs:PersonNameType"
+				minOccurs="0" />
+			<xs:element name="characterName" type="vcs:PersonNameType"
+				minOccurs="0" />
+			<xs:element name="organisationName" type="vcs:LanguageStringType"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PersonNameType">
+		<xs:annotation>
+			<xs:documentation>This resource contains the person name details.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="title" type="vcs:string255Type"
+				minOccurs="0" />
+			<xs:element name="givenName" type="vcs:string255Type"
+				minOccurs="0" />
+			<xs:element name="familyName" type="vcs:string255Type"
+				minOccurs="0" />
+		</xs:sequence>
+		<xs:attribute name="lang" type="vcs:string255Type" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="ContentSortStringType">
+		<xs:annotation>
+			<xs:documentation>This resource contains sorting details of a
+				content.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="sortStringMode" type="vcs:string255Type"
+				minOccurs="0" />
+			<xs:element name="sortString" type="vcs:LanguageStringType"
+				minOccurs="0" />
+			<xs:element name="sortStringEx" type="vcs:LanguageStringType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ContentAwardsType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a list of ContentAward
+				data.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ContentAward" type="vcs:ContentAwardType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContentAwardType">
+		<xs:annotation>
+			<xs:documentation>This resource contains the Award detail for a
+				content.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="orderNum" type="vcs:unsigned32Type" />
+			<xs:element name="awardDisplay" type="vcs:string255Type"
+				minOccurs="0" />
+			<xs:element name="categoryDisplay" type="vcs:string255Type"
+				minOccurs="0" />
+			<xs:element name="lang" type="vcs:string255Type"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="AdvisoriesListType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a list of Advisories
+				data.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Advisories" type="vcs:AdvisoriesType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdvisoriesType">
+		<xs:annotation>
+			<xs:documentation>Advisories are a set of flags which indicate what kind of adult
+			themes a piece of content may exhibit within a given geographical region.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="advisories" type="vcs:TermReferenceType"
+				maxOccurs="unbounded" />
+			<xs:element name="regions" type="vcs:URIListType"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ExtendedDescriptionsListType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a list of ExtendedDescriptions
+				data.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ExtendedDescription" type="vcs:ExtendedDescriptionType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ExtendedDescriptionType">
+		<xs:annotation>
+			<xs:documentation>This element specifies extended descriptions in different languages.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="text" type="vcs:string255Type"/>
+			<xs:element name="description" type="vcs:string4000Type"/>
+			<xs:element name="itemNumber" type="vcs:integerSignedType"/>
+		</xs:sequence>
+		<xs:attribute name="lang" type="vcs:string255Type" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="PurchaseGroupType">
+		<xs:annotation>
+			<xs:documentation>This contains one or more Purchase Group
+				resource.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="vcs:uriType"/>
+			<xs:element name="startDateTime" type="vcs:basicDateTimeType" minOccurs="0"/>
+			<xs:element name="endDateTime" type="vcs:basicDateTimeType" minOccurs="0"/>
+			<xs:element name="promotionalText" type="vcs:LanguageStringType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="presentationMedia" type="vcs:PresentationMediasType" minOccurs="0"/>
+			<xs:element name="groupMembers" type="vcs:PurchaseGroupMemberType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="purchaseOffer" type="vcs:uriType" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PurchaseGroupMemberType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a list of
+				PurchaseGroupMemberType data.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="startDateTime" type="vcs:basicDateTimeType" minOccurs="0"/>
+			<xs:element name="endDateTime" type="vcs:basicDateTimeType" minOccurs="0"/>
+			<xs:element name="contentInstanceId" type="vcs:key255Type" minOccurs="0"/>
+			<xs:element name="serviceInstanceId" type="vcs:key255Type" minOccurs="0"/>
+			<xs:element name="memberType" type="vcs:MemberTypeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="MemberTypeType">
+		<xs:annotation>
+			<xs:documentation>Enumerated string type with the following values
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="vcs:string255Type">
+			<xs:enumeration value="GROUP_MEMBER_TYPE_SERVICE_INSTANCE"/>
+			<xs:enumeration value="GROUP_MEMBER_TYPE_CONTENT_INSTANCE"/>
+			<xs:enumeration value="GROUP_MEMBER_TYPE_CONTENT_GROUP"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="PurchaseOfferType">
+		<xs:annotation>
+			<xs:documentation>This contains one or more Offer
+				resource.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="vcs:uriType" />
+			<xs:element name="startDateTime" type="vcs:basicDateTimeType"
+				minOccurs="0" />
+			<xs:element name="endDateTime" type="vcs:basicDateTimeType"
+				minOccurs="0" />
+			<xs:element name="offerKey" type="vcs:string255Type"
+				minOccurs="0"/>
+			<xs:element name="offerId" type="vcs:key255Type"
+				minOccurs="0" />
+			<xs:element name="type" type="vcs:key255Type"/>
+			<xs:element name="lastBuyDateTime" type="vcs:basicDateTimeType"
+				minOccurs="0" />
+			<xs:element name="name" type="vcs:LanguageStringType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="description" type="vcs:LanguageStringType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="classification" type="vcs:TermReferenceType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="price" type="vcs:ScheduledPriceType"
+				minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="caDetail" type="vcs:CADetailType"
+				minOccurs="0"/>
+			<xs:element name="presentationMedia" type="vcs:PresentationMediasType"
+				minOccurs="0"/>
+			<xs:element name="relatedMaterial" type="vcs:RelatedMaterialsType"
+				minOccurs="0"/>
+			<xs:element name="parentalGuidance" type="vcs:ParentalGuidancesType"
+				minOccurs="0"/>
+			<xs:element name="isSubscription" type="vcs:flagType"
+				minOccurs="0" />
+			<xs:element name="isOppv" type="vcs:flagType"
+				minOccurs="0" />
+			<xs:element name="isEncrypted" type="vcs:flagType"
+				minOccurs="0" />
+			<xs:element name="plannerRetentionDuration" type="vcs:unsigned32Type"
+				minOccurs="0" />
+			<xs:element name="rentalDuration" type="vcs:longNumberType"
+				minOccurs="0" />
+			<xs:element name="purchasability" type="vcs:OfferPurchasabilitiesType"
+				minOccurs="0" />
+			<xs:element name="operatorSpecificData" type="vcs:OperatorSpecificDatasType"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="OfferPurchasabilitiesType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates list of Availability
+				resources
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OfferPurchasability" type="vcs:OfferPurchasabilityType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="OfferPurchasabilityType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a list of OfferPurchasabilityType data.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="localeId" type="vcs:string255Type"
+				minOccurs="0" />
+			<xs:element name="startDateTime" type="vcs:basicDateTimeType" />
+			<xs:element name="endDateTime" type="vcs:basicDateTimeType"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ScheduledPriceType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a list of Scheduled Price data.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="startOffset" type="vcs:longNumberType"/>
+			<xs:element name="duration" type="vcs:longNumberType" minOccurs="0"/>
+			<xs:element name="description" type="vcs:key255Type" minOccurs="0"/>
+			<xs:element name="Price" type="vcs:PriceType" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="CADetailType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a list of CADetail data.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="businessRuleType" type="vcs:key255Type" minOccurs="0"/>
+			<xs:element name="businessRuleId" type="vcs:key255Type" minOccurs="0"/>
+			<xs:element name="Parameter" type="vcs:CAParametersType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PurchaseOfferResponse" type="vcs:PurchaseOfferResponseType" />
+	<xs:complexType name="PurchaseOfferResponseType">
+		<xs:annotation>
+			<xs:documentation>This is the root element of the response body for purchase offer request by key.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="offer" type="vcs:PurchaseOfferType" minOccurs="0" />
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="PurchasableTitleType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a list of
+				PurchasableTitle data.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="vcs:ItemType">
+				<xs:sequence>
+					<xs:element name="id" type="vcs:uriType" />
+					<xs:element name="logicalTitle" type="vcs:ContentMetadataType" />
+					<xs:element name="title" type="vcs:ContentInstanceMetadataType" />
+					<xs:element name="relatedMaterial" type="vcs:ContentInstanceMetadataType"
+						minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="presentationMedia" type="vcs:ContentInstanceMetadataType"
+						minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="offer" type="vcs:PurchaseOfferType"
+						minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="offerBinding" type="vcs:PurchaseGroupType"
+						minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PurchasableTitleRequest" type="vcs:PurchasableTitleRequestType" />
+	<xs:element name="PurchasableTitleResponse" type="vcs:PurchasableTitleResponseType" />
+	<xs:complexType name="PurchasableTitleRequestType">
+		<xs:annotation>
+			<xs:documentation>Root element of the request body
+			</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="PurchasableTitle" type="vcs:PurchasableTitleType"
+				minOccurs="0" />
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="PurchasableTitleResponseType">
+		<xs:annotation>
+			<xs:documentation>Root element of the response body
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="vcs:ResponseType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>
