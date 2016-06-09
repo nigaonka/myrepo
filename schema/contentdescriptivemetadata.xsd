@@ -2,7 +2,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:vcs="URN:CISCO:SPVTG:VCS:BO:REST:0001"
 	targetNamespace="URN:CISCO:SPVTG:VCS:BO:REST:0001" elementFormDefault="qualified"
 	attributeFormDefault="unqualified">
-	<xs:include schemaLocation="https://raw.githubusercontent.com/nigaonka/myrepo/blob/master/schema/common.xsd" />
+	<xs:include schemaLocation="https://raw.githubusercontent.com/nigaonka/myrepo/master/schema/common.xsd" />
 
 	<xs:complexType name="ContentDescriptiveMetadataType">
 		<xs:annotation>
