@@ -1,0 +1,61 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:vcs="URN:CISCO:SPVTG:VCS:BO:REST:0001"
+	targetNamespace="URN:CISCO:SPVTG:VCS:BO:REST:0001" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="https://raw.githubusercontent.com/nigaonka/myrepo/blob/master/schema/contentdescriptivemetadata.xsd" />
+	<xs:include schemaLocation="https://raw.githubusercontent.com/nigaonka/myrepo/blob/master/schema/common.xsd" />
+	<xs:complexType name="ContentMetadataType">
+		<xs:annotation>
+			<xs:documentation>This resource represents content definition,
+				descriptive metadata, presentation metadata and related materials.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="vcs:uriType" />
+			<xs:element name="type" type="vcs:contentTypeType" />
+			<xs:element name="key" type="vcs:string255Type" minOccurs="0" />
+			<xs:element name="contentId" type="vcs:string255Type" minOccurs="0" />
+			<xs:element name="startDateTime" type="vcs:basicDateTimeType"
+				minOccurs="0" />
+			<xs:element name="endDateTime" type="vcs:basicDateTimeType"
+				minOccurs="0" />
+			<xs:element name="sourceUri" type="vcs:uriType" minOccurs="0" />
+			<xs:element name="providerRef" type="vcs:uriType"
+				minOccurs="0" />
+			<xs:element name="soundType" type="vcs:soundTypeType"
+				minOccurs="0" />
+			<xs:element name="cgms" type="vcs:cgmsType" minOccurs="0" />
+			<xs:element name="descriptiveMetadata" type="vcs:ContentDescriptiveMetadataType" />
+			<xs:element name="memberOf" type="vcs:MemberOfContentGroupType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="otherIdentifiers" type="vcs:OtherIdentifiersType" minOccurs="0" />
+			<xs:element name="filter" type="vcs:string255Type" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="contentTypeType">
+		<xs:annotation>
+			<xs:documentation>Types of content metadata</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="vcs:string255Type">
+			<xs:enumeration value="Selectable" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="ContentMetadataResponse" type="vcs:ContentMetadataResponseType" />
+	<xs:complexType name="ContentMetadataResponseType">
+		<xs:annotation>
+			<xs:documentation>Root element of the response body
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+		<xs:extension base="vcs:ResponseType">
+				<xs:choice>
+					<xs:element name="ContentMetadata" type="vcs:ContentMetadataType"
+						minOccurs="0" />
+				</xs:choice>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>

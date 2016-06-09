@@ -1,0 +1,44 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:vcs="URN:CISCO:SPVTG:VCS:BO:REST:0001" targetNamespace="URN:CISCO:SPVTG:VCS:BO:REST:0001" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="https://raw.githubusercontent.com/nigaonka/myrepo/blob/master/schema/common.xsd"/>
+	<xs:complexType name="PurchaseGroupType">
+		<xs:annotation>
+			<xs:documentation>This contains one or more Purchase Group
+				resource.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="vcs:uriType"/>
+			<xs:element name="startDateTime" type="vcs:basicDateTimeType" minOccurs="0"/>
+			<xs:element name="endDateTime" type="vcs:basicDateTimeType" minOccurs="0"/>
+			<xs:element name="promotionalText" type="vcs:LanguageStringType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="presentationMedia" type="vcs:PresentationMediasType" minOccurs="0"/>
+			<xs:element name="groupMembers" type="vcs:PurchaseGroupMemberType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="purchaseOffer" type="vcs:uriType" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PurchaseGroupMemberType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a list of
+				PurchaseGroupMemberType data.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="startDateTime" type="vcs:basicDateTimeType" minOccurs="0"/>
+			<xs:element name="endDateTime" type="vcs:basicDateTimeType" minOccurs="0"/>
+			<xs:element name="contentInstanceId" type="vcs:key255Type" minOccurs="0"/>
+			<xs:element name="serviceInstanceId" type="vcs:key255Type" minOccurs="0"/>
+			<xs:element name="memberType" type="vcs:MemberTypeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="MemberTypeType">
+		<xs:annotation>
+			<xs:documentation>Enumerated string type with the following values
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="vcs:string255Type">
+			<xs:enumeration value="GROUP_MEMBER_TYPE_SERVICE_INSTANCE"/>
+			<xs:enumeration value="GROUP_MEMBER_TYPE_CONTENT_INSTANCE"/>
+			<xs:enumeration value="GROUP_MEMBER_TYPE_CONTENT_GROUP"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

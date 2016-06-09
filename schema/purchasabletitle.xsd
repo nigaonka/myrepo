@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:vcs="URN:CISCO:SPVTG:VCS:BO:REST:0001"
+	targetNamespace="URN:CISCO:SPVTG:VCS:BO:REST:0001" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="https://raw.githubusercontent.com/nigaonka/myrepo/blob/master/schema/common.xsd" />
+	<xs:include schemaLocation="https://raw.githubusercontent.com/nigaonka/myrepo/blob/master/schema/purchaseoffer.xsd" />
+	<xs:include schemaLocation="https://raw.githubusercontent.com/nigaonka/myrepo/blob/master/schema/purchasegroup.xsd" />
+	<xs:include schemaLocation="https://raw.githubusercontent.com/nigaonka/myrepo/blob/master/schema/contentinstancemetadata.xsd" />
+	<xs:include schemaLocation="https://raw.githubusercontent.com/nigaonka/myrepo/blob/master/schema/contentmetadata.xsd" />
+	<xs:complexType name="PurchasableTitleType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a list of
+				PurchasableTitle data.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="vcs:ItemType">
+				<xs:sequence>
+					<xs:element name="id" type="vcs:uriType" />
+					<xs:element name="logicalTitle" type="vcs:ContentMetadataType" />
+					<xs:element name="title" type="vcs:ContentInstanceMetadataType" />
+					<xs:element name="relatedMaterial" type="vcs:ContentInstanceMetadataType"
+						minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="presentationMedia" type="vcs:ContentInstanceMetadataType"
+						minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="offer" type="vcs:PurchaseOfferType"
+						minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="offerBinding" type="vcs:PurchaseGroupType"
+						minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PurchasableTitleRequest" type="vcs:PurchasableTitleRequestType" />
+	<xs:element name="PurchasableTitleResponse" type="vcs:PurchasableTitleResponseType" />
+	<xs:complexType name="PurchasableTitleRequestType">
+		<xs:annotation>
+			<xs:documentation>Root element of the request body
+			</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="PurchasableTitle" type="vcs:PurchasableTitleType"
+				minOccurs="0" />
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="PurchasableTitleResponseType">
+		<xs:annotation>
+			<xs:documentation>Root element of the response body
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="vcs:ResponseType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

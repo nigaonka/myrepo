@@ -1,0 +1,340 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:vcs="URN:CISCO:SPVTG:VCS:BO:REST:0001" targetNamespace="URN:CISCO:SPVTG:VCS:BO:REST:0001" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:include schemaLocation="https://raw.githubusercontent.com/nigaonka/myrepo/blob/master/schema/contentdescriptivemetadata.xsd"/>
+	<xs:include schemaLocation="contentdescriptivemetadata.xsd"/>
+	<xs:include schemaLocation="https://raw.githubusercontent.com/nigaonka/myrepo/blob/master/schema/common.xsd"/>
+	<xs:complexType name="ContentInstanceMetadataType">
+		<xs:annotation>
+			<xs:documentation>This resource represents instance specific metadata
+				including descriptive metadata, essence metadata, encoded file
+				detail, encrypted file detail and content availability information.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="vcs:uriType"/>
+			<xs:element name="key" type="vcs:string255Type" minOccurs="0"/>
+			<xs:element name="contentRef" type="vcs:uriType" minOccurs="0"/>
+			<xs:element name="instanceType" type="vcs:contentInstanceTypeType"/>
+			<xs:element name="relatedMaterialContentId" type="vcs:string255Type" minOccurs="0" />
+			<xs:element name="instanceId" type="vcs:string255Type" minOccurs="0"/>
+			<xs:element name="startDateTime" type="vcs:basicDateTimeType" minOccurs="0"/>
+			<xs:element name="endDateTime" type="vcs:basicDateTimeType" minOccurs="0"/>
+			<xs:element name="imageMimeType" type="vcs:string255Type" minOccurs="0"/>
+			<xs:element name="imageTextLang" type="vcs:string255Type" minOccurs="0"/>
+			<xs:element name="imageWidth" type="vcs:unsigned16Type" minOccurs="0"/>
+			<xs:element name="imageHeight" type="vcs:unsigned16Type" minOccurs="0"/>
+			<xs:element name="encodedFile" type="vcs:FileDetailType" minOccurs="0"/>
+			<xs:element name="essenceMetadata" type="vcs:EssenceMetadataType" minOccurs="0"/>
+			<xs:element name="availability" type="vcs:InstanceAvailabilitiesType" minOccurs="0"/>
+			<xs:element name="catchupAvailability" type="vcs:CatchupAvailabilitiesType" minOccurs="0"/>
+			<xs:element name="imageFile" type="vcs:FileDetailType" minOccurs="0"/>
+			<xs:element name="encryptedFile" type="vcs:EncryptedFileDetailsType" minOccurs="0"/>
+			<xs:element name="descriptiveMetadata" type="vcs:ContentDescriptiveMetadataType"/>
+			<xs:element name="restartAvailability" type="vcs:RestartAvailabilitiesType" minOccurs="0"/>
+			<xs:element name="otherIdentifiers" type="vcs:OtherIdentifiersType" minOccurs="0" />
+			<xs:element name="filter" type="vcs:string255Type" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="contentInstanceTypeType">
+		<xs:annotation>
+			<xs:documentation>Types of content instance metadata
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="vcs:string255Type">
+			<xs:enumeration value="Linear"/>
+			<xs:enumeration value="Image"/>
+			<xs:enumeration value="PreEncoded"/>
+			<xs:enumeration value="Application"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="FileDetailType">
+		<xs:annotation>
+			<xs:documentation>This resource contains the details of a content
+				file.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="sourceUri" type="vcs:uriType" minOccurs="0"/>
+			<xs:element name="fileSize" type="vcs:longNumberType" minOccurs="0"/>
+			<xs:element name="checkSum" type="vcs:integerSignedType" minOccurs="0"/>
+			<xs:element name="fileFormat" type="vcs:FileFormatType" minOccurs="0"/>
+			<xs:element name="fileAccess" type="vcs:FileAccessListType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FileAccessListType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates the list of FileAccess
+				resources
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FileAccess" type="vcs:FileAccessType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FileAccessType">
+		<xs:annotation>
+			<xs:documentation>This resource contains file access details.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="accessUrl" type="vcs:uriType"/>
+			<xs:element name="deliveryType" type="vcs:deliveryTypeType"/>
+			<xs:element name="contentDeliveryInfo" type="vcs:contentDeliveryInfoType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="contentDeliveryInfoType">
+		<xs:annotation>
+			<xs:documentation>This resource contains delivery details.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="bandwidth" type="vcs:integerSignedType" minOccurs="0"/>
+			<xs:element name="externalServiceId" type="vcs:string255Type" minOccurs="0"/>
+			<xs:element name="cableSessionSetUpURI" type="vcs:uriType" minOccurs="0"/>
+			<xs:element name="cableFrequency" type="vcs:longNumberType" minOccurs="0"/>
+			<xs:element name="cableModulation" type="vcs:modulationTypeType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="modulationTypeType">
+		<xs:annotation>
+			<xs:documentation>Supported modulation schemes</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="vcs:string255Type">
+			<xs:enumeration value="urn:nnds:mercury:metadata:modulationType/16-QAM"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:modulationType/32-QAM"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:modulationType/64-QAM"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:modulationType/128-QAM"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:modulationType/256-QAM"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:modulationType/8PSK"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="deliveryTypeType">
+		<xs:annotation>
+			<xs:documentation>Supported delivery types</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="vcs:string255Type">
+			<xs:enumeration value="urn:nnds:mercury:metadata:deliveryType/VideoStreaming"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:deliveryType/PDLDelivery"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:deliveryType/BDLDelivery"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:deliveryType/OECMDelivery"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:deliveryType/File"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:deliveryType/abr/hls"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:deliveryType/abr/nds"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:deliveryType/abr/smooth"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:deliveryType/abr/mpegdash"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:deliveryType/CDNDelivery"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:deliveryType/cableDelivery"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FileFormatType">
+		<xs:annotation>
+			<xs:documentation>Types of files supported</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="vcs:string255Type">
+			<xs:enumeration value="urn:nnds:mercury:metadata:fileFormat/NFF"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:fileFormat/JPEG"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:fileFormat/GIF"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:fileFormat/MPEG4"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:fileFormat/PNG"/>
+			<xs:enumeration value="urn:nnds:mercury:metadata:fileFormat/TXT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="EssenceMetadataType">
+		<xs:annotation>
+			<xs:documentation>This resource represents essence of the content
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="soundType" type="vcs:soundTypeType" minOccurs="0"/>
+			<xs:element name="cgms" type="vcs:cgmsType" minOccurs="0"/>
+			<xs:element name="isEncrypted" type="vcs:flagType" minOccurs="0"/>
+			<xs:element name="isWideScreen" type="vcs:flagType" minOccurs="0"/>
+			<xs:element name="isHighDefinition" type="vcs:flagType" minOccurs="0"/>
+			<xs:element name="isThreeDimensional" type="vcs:flagType" minOccurs="0"/>
+			<xs:element name="hardOfHearingAvailable" type="vcs:flagType" minOccurs="0"/>
+			<xs:element name="audioDescriptionAvailable" type="vcs:flagType" minOccurs="0"/>
+			<xs:element name="subtitleLanguages" type="vcs:StringListType" minOccurs="0"/>
+			<xs:element name="contentControlParams" type="vcs:CAParametersType" minOccurs="0"/>
+			<xs:element name="videoComponents" type="vcs:VideoComponentsType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VideoComponentsType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates the list of video component
+				resources.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="VideoComponent" type="vcs:VideoComponentType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VideoComponentType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a video component
+				resource.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="resolution" type="vcs:ResolutionType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResolutionType">
+		<xs:annotation>
+			<xs:documentation>This resource contains Resolution parameter for the content instance.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ratio" type="vcs:string255Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CatchupAvailabilitiesType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates list of Catchup Availability
+				resources
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CatchupAvailability" type="vcs:CatchupAvailabilityType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RestartAvailabilitiesType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates list of Restart Availability
+				resources
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RestartAvailability" type="vcs:RestartAvailabilityType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InstanceAvailabilitiesType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates list of Availability
+				resources
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="InstanceAvailability" type="vcs:InstanceAvailabilityType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EncryptedFileAvailabilitiesType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates list of Encrypted File Availability
+				resources
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="EncryptedFileAvailability" type="vcs:EncryptedFileAvailabilityType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CatchupAvailabilityType">
+		<xs:annotation>
+			<xs:documentation>This resource contains the scheduling details of a
+				catchup content.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="serviceRef" type="vcs:uriType"/>
+			<xs:element name="nominalEventDateTime" type="vcs:basicDateTimeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RestartAvailabilityType">
+		<xs:annotation>
+			<xs:documentation>This resource contains the scheduling details of a
+				restart content.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="serviceRef" type="vcs:uriType"/>
+			<xs:element name="nominalEventDateTime" type="vcs:basicDateTimeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InstanceAvailabilityType">
+		<xs:annotation>
+			<xs:documentation>This resource contains the scheduling details of a
+				content.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="localeId" type="vcs:string255Type" minOccurs="0"/>
+			<xs:element name="serviceInstanceId" type="vcs:string255Type" minOccurs="0"/>
+			<xs:element name="startDateTime" type="vcs:basicDateTimeType"/>
+			<xs:element name="endDateTime" type="vcs:basicDateTimeType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EncryptedFileAvailabilityType">
+		<xs:annotation>
+			<xs:documentation>This resource contains the scheduling details of a
+				encrypted file.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="localeId" type="vcs:string255Type" minOccurs="0"/>
+			<xs:element name="startDateTime" type="vcs:basicDateTimeType"/>
+			<xs:element name="endDateTime" type="vcs:basicDateTimeType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OECMFilesType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates list of OECM resources
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OECMFile" type="vcs:OECMFileType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OECMFileType">
+		<xs:annotation>
+			<xs:documentation>This resource contains the details of the file that
+				holds offer related details of a content.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="offerRef" type="vcs:uriType"/>
+			<xs:element name="caSystemId" type="vcs:unsigned16Type"/>
+			<xs:element name="caSubSystemId" type="vcs:unsigned16Type"/>
+			<xs:element name="activeDateTime" type="vcs:basicDateTimeType" minOccurs="0"/>
+			<xs:element name="fileDetail" type="vcs:FileDetailType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EncryptedFileDetailsType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates list of Encrypted File Detail
+				resources
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="EncryptedFile" type="vcs:EncryptedFileDetailType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EncryptedFileDetailType">
+		<xs:annotation>
+			<xs:documentation>This resource contains the details of the file that
+				holds encrypted file related details of a content.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="versionId" type="vcs:string255Type" minOccurs="1"/>
+			<xs:element name="physicalInstanceId" type="vcs:string255Type" minOccurs="1"/>
+			<xs:element name="fileAccess" type="vcs:FileDetailType" minOccurs="1"/>
+			<xs:element name="encryptedFileAvailability" type="vcs:EncryptedFileAvailabilitiesType" minOccurs="0"/>
+			<xs:element name="oecmFiles" type="vcs:OECMFilesType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ContentInstanceMetadataResponse" type="vcs:ContentInstanceMetadataResponseType"/>
+	<xs:complexType name="ContentInstanceMetadataResponseType">
+		<xs:annotation>
+			<xs:documentation>Root element of the response body
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="vcs:ResponseType">
+				<xs:choice>
+					<xs:element name="ContentInstanceMetadata" type="vcs:ContentInstanceMetadataType" minOccurs="0"/>
+				</xs:choice>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

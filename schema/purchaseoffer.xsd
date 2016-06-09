@@ -1,0 +1,118 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:vcs="URN:CISCO:SPVTG:VCS:BO:REST:0001"
+	targetNamespace="URN:CISCO:SPVTG:VCS:BO:REST:0001" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="https://raw.githubusercontent.com/nigaonka/myrepo/blob/master/schema/common.xsd" />
+	<xs:complexType name="PurchaseOfferType">
+		<xs:annotation>
+			<xs:documentation>This contains one or more Offer
+				resource.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="vcs:uriType" />
+			<xs:element name="startDateTime" type="vcs:basicDateTimeType"
+				minOccurs="0" />
+			<xs:element name="endDateTime" type="vcs:basicDateTimeType"
+				minOccurs="0" />
+			<xs:element name="offerKey" type="vcs:string255Type"
+				minOccurs="0"/>
+			<xs:element name="offerId" type="vcs:key255Type"
+				minOccurs="0" />
+			<xs:element name="type" type="vcs:key255Type"/>
+			<xs:element name="lastBuyDateTime" type="vcs:basicDateTimeType"
+				minOccurs="0" />
+			<xs:element name="name" type="vcs:LanguageStringType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="description" type="vcs:LanguageStringType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="classification" type="vcs:TermReferenceType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="price" type="vcs:ScheduledPriceType"
+				minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="caDetail" type="vcs:CADetailType"
+				minOccurs="0"/>
+			<xs:element name="presentationMedia" type="vcs:PresentationMediasType"
+				minOccurs="0"/>
+			<xs:element name="relatedMaterial" type="vcs:RelatedMaterialsType"
+				minOccurs="0"/>
+			<xs:element name="parentalGuidance" type="vcs:ParentalGuidancesType"
+				minOccurs="0"/>
+			<xs:element name="isSubscription" type="vcs:flagType"
+				minOccurs="0" />
+			<xs:element name="isOppv" type="vcs:flagType"
+				minOccurs="0" />
+			<xs:element name="isEncrypted" type="vcs:flagType"
+				minOccurs="0" />
+			<xs:element name="plannerRetentionDuration" type="vcs:unsigned32Type"
+				minOccurs="0" />
+			<xs:element name="rentalDuration" type="vcs:longNumberType"
+				minOccurs="0" />
+			<xs:element name="purchasability" type="vcs:OfferPurchasabilitiesType"
+				minOccurs="0" />
+			<xs:element name="operatorSpecificData" type="vcs:OperatorSpecificDatasType"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="OfferPurchasabilitiesType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates list of Availability
+				resources
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OfferPurchasability" type="vcs:OfferPurchasabilityType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="OfferPurchasabilityType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a list of OfferPurchasabilityType data.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="localeId" type="vcs:string255Type"
+				minOccurs="0" />
+			<xs:element name="startDateTime" type="vcs:basicDateTimeType" />
+			<xs:element name="endDateTime" type="vcs:basicDateTimeType"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ScheduledPriceType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a list of Scheduled Price data.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="startOffset" type="vcs:longNumberType"/>
+			<xs:element name="duration" type="vcs:longNumberType" minOccurs="0"/>
+			<xs:element name="description" type="vcs:key255Type" minOccurs="0"/>
+			<xs:element name="Price" type="vcs:PriceType" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="CADetailType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a list of CADetail data.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="businessRuleType" type="vcs:key255Type" minOccurs="0"/>
+			<xs:element name="businessRuleId" type="vcs:key255Type" minOccurs="0"/>
+			<xs:element name="Parameter" type="vcs:CAParametersType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PurchaseOfferResponse" type="vcs:PurchaseOfferResponseType" />
+	<xs:complexType name="PurchaseOfferResponseType">
+		<xs:annotation>
+			<xs:documentation>This is the root element of the response body for purchase offer request by key.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="offer" type="vcs:PurchaseOfferType" minOccurs="0" />
+		</xs:choice>
+	</xs:complexType>
+</xs:schema>

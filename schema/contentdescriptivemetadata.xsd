@@ -1,0 +1,231 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:vcs="URN:CISCO:SPVTG:VCS:BO:REST:0001"
+	targetNamespace="URN:CISCO:SPVTG:VCS:BO:REST:0001" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="https://raw.githubusercontent.com/nigaonka/myrepo/blob/master/schema/common.xsd" />
+
+	<xs:complexType name="ContentDescriptiveMetadataType">
+		<xs:annotation>
+			<xs:documentation>This resource contains descriptive meta data of a
+				content.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="title" type="vcs:DescriptionStringType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="synopsis" type="vcs:DescriptionStringType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="episodeTitle" type="vcs:DescriptionStringType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="episodeDisplay" type="vcs:DescriptionStringType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="episodeDisplayEx" type="vcs:LanguageStringType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="seriesDisplay" type="vcs:DescriptionStringType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="seriesDisplayEx" type="vcs:LanguageStringType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="marketingMessage" type="vcs:LanguageStringType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="branding" type="vcs:LanguageStringType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="sortString" type="vcs:ContentSortStringType"
+				minOccurs="0" />
+			<xs:element name="weighedKeyword" type="vcs:ContentKeywordType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="SellPrice" type="vcs:PricesType"
+				minOccurs="0" />
+			<xs:element name="classificationRef" type="vcs:TermReferenceType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="genre" type="vcs:uriType" minOccurs="0"
+				maxOccurs="unbounded" />
+			<xs:element name="relatedMaterial" type="vcs:RelatedMaterialsType"
+				minOccurs="0" />
+			<xs:element name="presentationMedia" type="vcs:PresentationMediasType"
+				minOccurs="0" />
+			<xs:element name="epgInfoBits" type="vcs:unsigned32Type"
+				minOccurs="0" />
+			<xs:element name="userNibbles" type="vcs:unsigned8Type"
+				minOccurs="0" />
+			<xs:element name="exhibitionDateTime" type="vcs:basicDateTimeType"
+				minOccurs="0" />
+			<xs:element name="materialId" type="vcs:key255Type"
+				minOccurs="0" />
+			<xs:element name="duration" type="vcs:longNumberType"
+				minOccurs="0" />
+			<xs:element name="parentalGuidance" type="vcs:ParentalGuidancesType"
+				minOccurs="0" />
+			<xs:element name="credits" type="vcs:ContentCreditsType"
+				minOccurs="0" />
+			<xs:element name="awards" type="vcs:ContentAwardsType"
+				minOccurs="0" />
+			<xs:element name="contentProviderRef" type="vcs:key255Type"
+				minOccurs="0" />
+			<xs:element name="yearOfRelease" type="vcs:basicDateTimeType"
+				minOccurs="0" />
+			<xs:element name="countryOfOrigin" type="vcs:StringListType"
+				minOccurs="0" />
+			<xs:element name="criticsChoice" type="vcs:flagType"
+				minOccurs="0" />
+			<xs:element name="isNewShow" type="vcs:flagType"
+				minOccurs="0" />
+			<xs:element name="isPremiere" type="vcs:flagType"
+				minOccurs="0" />
+			<xs:element name="isFinale" type="vcs:flagType" minOccurs="0" />
+			<xs:element name="advisories" type="vcs:AdvisoriesListType"
+				minOccurs="0" />
+			<xs:element name="extendedDescriptions" type="vcs:ExtendedDescriptionsListType"
+				minOccurs="0" />
+
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ContentKeywordType">
+		<xs:annotation>
+			<xs:documentation>This resource contains the keyword for searching a
+				content with weight.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="vcs:string4000Type">
+				<xs:attribute name="lang" type="vcs:string255Type" use="required" />
+				<xs:attribute name="weight" type="vcs:unsigned16Type" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ContentCreditsType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a list of ContentCredit
+				data.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ContentCredit" type="vcs:ContentCreditType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContentCreditType">
+		<xs:annotation>
+			<xs:documentation>This resource contains the Credit detail of a
+				content.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="orderNum" type="vcs:unsigned32Type"
+				minOccurs="0" />
+			<xs:element name="role" type="vcs:uriType" minOccurs="0" />
+			<xs:element name="personName" type="vcs:PersonNameType"
+				minOccurs="0" />
+			<xs:element name="characterName" type="vcs:PersonNameType"
+				minOccurs="0" />
+			<xs:element name="organisationName" type="vcs:LanguageStringType"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PersonNameType">
+		<xs:annotation>
+			<xs:documentation>This resource contains the person name details.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="title" type="vcs:string255Type"
+				minOccurs="0" />
+			<xs:element name="givenName" type="vcs:string255Type"
+				minOccurs="0" />
+			<xs:element name="familyName" type="vcs:string255Type"
+				minOccurs="0" />
+		</xs:sequence>
+		<xs:attribute name="lang" type="vcs:string255Type" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="ContentSortStringType">
+		<xs:annotation>
+			<xs:documentation>This resource contains sorting details of a
+				content.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="sortStringMode" type="vcs:string255Type"
+				minOccurs="0" />
+			<xs:element name="sortString" type="vcs:LanguageStringType"
+				minOccurs="0" />
+			<xs:element name="sortStringEx" type="vcs:LanguageStringType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ContentAwardsType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a list of ContentAward
+				data.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ContentAward" type="vcs:ContentAwardType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContentAwardType">
+		<xs:annotation>
+			<xs:documentation>This resource contains the Award detail for a
+				content.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="orderNum" type="vcs:unsigned32Type" />
+			<xs:element name="awardDisplay" type="vcs:string255Type"
+				minOccurs="0" />
+			<xs:element name="categoryDisplay" type="vcs:string255Type"
+				minOccurs="0" />
+			<xs:element name="lang" type="vcs:string255Type"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="AdvisoriesListType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a list of Advisories
+				data.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Advisories" type="vcs:AdvisoriesType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdvisoriesType">
+		<xs:annotation>
+			<xs:documentation>Advisories are a set of flags which indicate what kind of adult
+			themes a piece of content may exhibit within a given geographical region.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="advisories" type="vcs:TermReferenceType"
+				maxOccurs="unbounded" />
+			<xs:element name="regions" type="vcs:URIListType"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ExtendedDescriptionsListType">
+		<xs:annotation>
+			<xs:documentation>This resource encapsulates a list of ExtendedDescriptions
+				data.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ExtendedDescription" type="vcs:ExtendedDescriptionType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ExtendedDescriptionType">
+		<xs:annotation>
+			<xs:documentation>This element specifies extended descriptions in different languages.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="text" type="vcs:string255Type"/>
+			<xs:element name="description" type="vcs:string4000Type"/>
+			<xs:element name="itemNumber" type="vcs:integerSignedType"/>
+		</xs:sequence>
+		<xs:attribute name="lang" type="vcs:string255Type" use="required"/>
+	</xs:complexType>
+
+</xs:schema>
